@@ -1289,38 +1289,74 @@
             // Handle image file
             const imageFile = document.getElementById('recipe-image').files[0];
             let imageUrl = '';
+            
+            // If an image is selected, convert it to base64 for storage
             if (imageFile) {
-                imageUrl = URL.createObjectURL(imageFile);
+                // Convert image to base64
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageUrl = e.target.result; // This will be a base64 data URL
+                    
+                    // Create recipe object with base64 image
+                    const recipe = {
+                        id: generateId(),
+                        name: document.getElementById('recipe-name').value.trim(),
+                        category: document.getElementById('recipe-category').value,
+                        prepTime: parseInt(document.getElementById('prep-time').value),
+                        cookTime: parseInt(document.getElementById('cook-time').value),
+                        servings: parseInt(document.getElementById('servings').value),
+                        image: imageUrl,
+                        ingredients: ingredients,
+                        instructions: instructions,
+                        dateAdded: new Date().toISOString()
+                    };
+                    
+                    // Add recipe to collection and save
+                    recipes.push(recipe);
+                    saveRecipes();
+                    
+                    // Show success message
+                    showSuccessMessage();
+                    
+                    // Reset form
+                    document.getElementById('recipe-form').reset();
+                    resetDynamicInputs();
+                    
+                    // Refresh displays
+                    displayFeaturedRecipes();
+                    displayAllRecipes();
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                // No image selected, create recipe without image
+                const recipe = {
+                    id: generateId(),
+                    name: document.getElementById('recipe-name').value.trim(),
+                    category: document.getElementById('recipe-category').value,
+                    prepTime: parseInt(document.getElementById('prep-time').value),
+                    cookTime: parseInt(document.getElementById('cook-time').value),
+                    servings: parseInt(document.getElementById('servings').value),
+                    image: imageUrl,
+                    ingredients: ingredients,
+                    instructions: instructions,
+                    dateAdded: new Date().toISOString()
+                };
+                
+                // Add recipe to collection and save
+                recipes.push(recipe);
+                saveRecipes();
+                
+                // Show success message
+                showSuccessMessage();
+                
+                // Reset form
+                document.getElementById('recipe-form').reset();
+                resetDynamicInputs();
+                
+                // Refresh displays
+                displayFeaturedRecipes();
+                displayAllRecipes();
             }
-            
-            // Create recipe object
-            const recipe = {
-                id: generateId(),
-                name: document.getElementById('recipe-name').value.trim(),
-                category: document.getElementById('recipe-category').value,
-                prepTime: parseInt(document.getElementById('prep-time').value),
-                cookTime: parseInt(document.getElementById('cook-time').value),
-                servings: parseInt(document.getElementById('servings').value),
-                image: imageUrl,
-                ingredients: ingredients,
-                instructions: instructions,
-                dateAdded: new Date().toISOString()
-            };
-            
-            // Add recipe to collection
-            recipes.push(recipe);
-            saveRecipes();
-            
-            // Show success message
-            showSuccessMessage();
-            
-            // Reset form
-            event.target.reset();
-            resetDynamicInputs();
-            
-            // Refresh displays
-            displayFeaturedRecipes();
-            displayAllRecipes();
         }
 
         function resetDynamicInputs() {
