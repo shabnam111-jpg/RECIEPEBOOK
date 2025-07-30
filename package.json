@@ -1,0 +1,31 @@
+{
+  "name": "recipe-book",
+  "version": "1.0.0",
+  "description": "A modern Recipe Book web application for storing and organizing your favorite recipes",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 3000",
+    "dev": "http-server -p 3000 -o",
+    "build": "echo 'No build step required for static site'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "recipe",
+    "cookbook",
+    "food",
+    "cooking",
+    "web-app",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shabnam111-jpg/RECIEPEBOOK.git"
+  }
+}
